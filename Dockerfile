@@ -15,7 +15,9 @@ RUN mkdir build && cd build && \
 # 最终镜像
 FROM alpine
 
-RUN apk add --no-cache bash tini
+RUN apk add --no-cache \
+    bash tini \
+    libuv json-c libwebsockets zlib openssl
 
 COPY --from=builder /src/build/ttyd /usr/bin/ttyd
 RUN chmod +x /usr/bin/ttyd
