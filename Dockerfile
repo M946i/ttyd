@@ -31,4 +31,4 @@ RUN chmod +x /usr/bin/ttyd
 EXPOSE 7681
 WORKDIR /root
 ENTRYPOINT ["/sbin/tini", "--"]
-CMD ["ttyd", "-W", "--port", "7681", "--interface", "0.0.0.0", "--debug", "3", "bash"]"]
+CMD ["ttyd", "-W", "--port", "7681", "--interface", "0.0.0.0", "--debug", "3", "bash"]
