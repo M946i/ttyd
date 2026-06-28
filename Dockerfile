@@ -12,7 +12,6 @@ RUN mkdir build && cd build && \
     make -j$(nproc) && \
     strip ttyd
 
-# 最终镜像
 FROM alpine
 
 RUN apk add --no-cache \
@@ -25,4 +24,4 @@ RUN chmod +x /usr/bin/ttyd
 EXPOSE 7681
 WORKDIR /root
 ENTRYPOINT ["/sbin/tini", "--"]
-CMD ["ttyd", "-W", "bash"]
+CMD ["ttyd", "-W", "--port", "7681", "--interface", "0.0.0.0", "bash"]
