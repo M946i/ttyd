@@ -7,16 +7,17 @@ RUN apk add --no-cache \
 WORKDIR /src
 COPY . .
 
+# 静态链接构建
 RUN mkdir build && cd build && \
-    cmake .. -DCMAKE_BUILD_TYPE=Release && \
+    cmake .. -DCMAKE_BUILD_TYPE=Release \
+             -DCMAKE_EXE_LINKER_FLAGS="-static" && \
     make -j$(nproc) && \
     strip ttyd
 
+# 最终极简镜像
 FROM alpine
 
-RUN apk add --no-cache \
-    bash tini \
-    libuv json-c libwebsockets zlib openssl
+RUN apk add --no-cache bash tini
 
 COPY --from=builder /src/build/ttyd /usr/bin/ttyd
 RUN chmod +x /usr/bin/ttyd
